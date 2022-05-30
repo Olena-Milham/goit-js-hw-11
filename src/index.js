@@ -21,8 +21,6 @@ const loadMoreBtn = new LoadMoreBtn({
 });
 
 console.log(loadMoreBtn);
-loadMoreBtn.show();
-loadMoreBtn.disable();
 
 refs.searchForm.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', loadHits);
@@ -31,8 +29,8 @@ function onSearch(e) {
   e.preventDefault();
   // set a new value to this.searchQuery via set method
   galleryApiService.query = e.currentTarget.elements.searchQuery.value.trim();
+
   if (galleryApiService.query === '') {
-    // clearHitsGallery();
     return Notify.failure('The search field is empty.');
   }
 
@@ -50,10 +48,6 @@ function loadHits() {
     loadMoreBtn.enable();
   });
 }
-// function onLoadMore() {
-//   // galleryApiService.fetchPhotos().then(appendHitsMarkup);
-//   loadHits();
-// }
 
 // adds gallery cards
 const appendHitsMarkup = hits => {
