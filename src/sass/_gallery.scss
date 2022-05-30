@@ -93,3 +93,28 @@ img {
 // .gallery-card__img {
 //   width: 500px;
 // }
+
+.button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  // background-color: blue;
+}
+.button.is-hidden {
+  display: none;
+}
+.button > .spinner.is-hidden {
+  display: none;
+}
+
+.btn-primary {
+  color: white;
+  background-color: #007bff;
+  border-color: #007bff;
+  border-radius: 4px;
+}
+
+.btn {
+  font-weight: 400;
+  text-align: center;
+}

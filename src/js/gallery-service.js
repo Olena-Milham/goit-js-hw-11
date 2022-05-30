@@ -16,12 +16,12 @@ export default class GalleryApiService {
     //   return promise to draw in outer code
     return fetch(url)
       .then(response => response.json())
-      .then(data => {
+      .then(({ hits }) => {
         // console.log(data);
         this.incrementPage(); // if the http request is successful (we recieved fetch result) and we recieved data, we can increase the page load => that's why we're doing it here, in this then
         // console.log('after http request', this);
         // console.log(data.hits);
-        return data.hits;
+        return hits;
       });
   }
 
