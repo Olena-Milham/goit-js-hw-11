@@ -1,4 +1,4 @@
-const imageGallery = ({
+const hitsGallery = ({
   webformatURL,
   largeImageURL,
   tags,
@@ -29,4 +29,4 @@ const imageGallery = ({
     </div>`;
 };
 
-export default imageGallery;
+export default hitsGallery;
