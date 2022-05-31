@@ -1,44 +1,34 @@
-// api working logic
+//  api working logic
+
+import axios from 'axios';
 
 export default class GalleryApiService {
   constructor() {
     this.searchQuery = '';
     //   our object property (page) and its value(1);
     this.page = 1;
-    this.totalHits = null;
+    this.totalHits = 0;
   }
   // methods
-  fetchPhotos() {
-    //   let's look at this.searchQuery value
-    // console.log('before http request', this);
+  async fetchPhotos() {
     const BASE_URL = 'https://pixabay.com';
     const API_KEY = '27724352-dbb0b885dfbe6c3089a83b168';
     const url = `${BASE_URL}/api/?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horisontal&safesearch=true&per_page=40&page=${this.page}`;
-
+    console.log(this);
     //   return promise to draw in outer code
-    return fetch(url)
-      .then(response => {
-        // if (!response.ok) {
-        //   throw new Error(response.status);
-        // }
-        console.log(response);
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-        this.incrementPage(); // if the http request is successful (we recieved fetch result) and we recieved data, we can increase the page load => that's why we're doing it here, in this then
-        // console.log('after http request', this);
-        // console.log(data.hits);
-        // console.log(hits);
+    const response = await axios(url);
+    if (!response.data.total) {
+      throw new Error('error');
+    }
+    console.log(response);
+    this.incrementPage();
+    const { hits, totalHits } = response.data;
+    this.setTotalHits();
+    this.lastTotalHits();
 
-        // const totalHit = data.totalHits;
+    console.log(response.data);
 
-        return data.hits;
-      });
-    // .catch(error => {
-    //   // Error handling
-    //   Notify.failure('Oops, there is no picture with that name');
-    // });
+    return { hits, totalHits };
   }
 
   // page methods
@@ -48,6 +38,12 @@ export default class GalleryApiService {
   resetPage() {
     this.page = 1;
   }
+  setTotalHits(hits) {
+    this.totalHits = hits;
+  }
+  lastTotalHits() {
+    this.totalHits -= 40;
+  }
   // methods to write smth down or recieve from outer code
   get query() {
     return this.searchQuery;
@@ -55,7 +51,4 @@ export default class GalleryApiService {
   set query(newQuery) {
     this.searchQuery = newQuery;
   }
-  // onCatchError(error) {
-  //   Notify.failure('Oops, there is no country with that name');
-  // }
 }

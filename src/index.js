@@ -5,6 +5,7 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import LoadMoreBtn from './js/load-btn';
+// import GalleryTpl from './templates/gallery.hbs';
 
 const refs = {
   searchForm: document.querySelector('#search-form'),
@@ -70,8 +71,9 @@ async function loadHits() {
 }
 
 // adds gallery cards
-const appendHitsMarkup = hits => {
-  const markup = hits.map(image => imageHits(image)).join('');
+
+const appendHitsMarkup = data => {
+  const markup = data.map(image => imageHits(image)).join('');
   refs.gallery.insertAdjacentHTML('beforeend', markup);
   new SimpleLightbox('.photo-card a', {
     captionsData: 'alt',
