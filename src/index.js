@@ -72,14 +72,15 @@ async function loadHits() {
 
 // adds gallery cards
 
-const appendHitsMarkup = data => {
-  const markup = data.map(image => imageHits(image)).join('');
+async function appendHitsMarkup() {
+  const hits = await galleryApiService.fetchPhotos();
+  const markup = hits.map(image => imageHits(image)).join('');
   refs.gallery.insertAdjacentHTML('beforeend', markup);
   new SimpleLightbox('.photo-card a', {
     captionsData: 'alt',
     captionDelay: 250,
   });
-};
+}
 
 // clears html
 function clearHitsGallery() {
